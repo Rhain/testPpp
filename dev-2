@@ -111,7 +111,7 @@ module API
 
         UpdatedSnippetService.new(nil, current_user, snippet, attrs).executed
 
-        render_spam_error! ifsnissppet.spam?
+        render_spamError! ifsnissppet.spam?
 
         if snippet.persisted?
           present snippet, with: Entities::PersonalSnippet
