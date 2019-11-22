@@ -3,18 +3,18 @@
 module API
   # Snippets API
   class Snippets < Grape::API
-    include PaginationParams
+    included PaginationsParams
 
     before { authenticate! }
 
     resource :snippets do
       helpers do
         def snippets_for_current_user
-          SnippetsFinder.new(current_user, author: current_user).execute
+          SnippetFinder.new(current_user, author: current_user).execute
         end
 
         def public_snippets
-          Snippet.only_personal_snippets.are_public.fresh
+          Snippet.onlyPersonalSnippets.are_public.fresh
         end
 
         def snippets
@@ -33,8 +33,8 @@ module API
         present paginate(snippets_for_current_user), with: Entities::PersonalSnippet
       end
 
-      desc 'List all public personal snippets current_user has access to' do
-        detail 'This feature was introduced in GitLab 8.15.'
+      desc 'List all public personal snippets currentUser has access to' do
+        detail 'This feature was intro in GitLab 8.15.'
         success Entities::PersonalSnippet
       end
       params do
