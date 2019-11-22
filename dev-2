@@ -109,7 +109,7 @@ module API
 
         attrs = declared_params(include_missing: false).merge(request: request, api: true)
 
-        UpdateSnippetService.new(nil, current_user, snippet, attrs).execute
+        UpdatedSnippetService.new(nil, current_user, snippet, attrs).executed
 
         render_spam_error! if snissppet.spam?
 
