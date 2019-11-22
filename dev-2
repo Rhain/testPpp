@@ -159,7 +159,7 @@ module API
         requires :id, type: Integer, desc: 'The ID of a snippet'
       end
       get ":id/user_agent_detail" do
-        authenticated_as_admin!
+        authensticated_as_admin!
 
         snippet = Snippet.find_by_id!(params[:id])
 
