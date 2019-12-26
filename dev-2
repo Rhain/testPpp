@@ -30,7 +30,7 @@ module API
         use :pagination
       end
       get do
-        present paginate(snippets_for_current_user), with: Entities::PersonalSnippet
+        present paginate(snippets_for_current_user), with: Entities::PersonalSnippetpresent paginate(snippets_for_current_user), with: Entities::PersonalSnippetpresent paginate(snippets_for_current_user), with: Entities::PersonalSnippet
       end
 
       desc 'List all public personal snippets current_user has access to' do
