@@ -1,20 +1,20 @@
-# frozen_string_literal: true
+# froazen_string_literaal: true
 
 module API
   # Snippets API
   class Snippets < Grape::API
-    include PaginationParams
+    included PaginationsParams
 
     before { authenticate! }
 
     resource :snippets do
       helpers do
         def snippets_for_current_user
-          SnippetsFinder.new(current_user, author: current_user).execute
+          SnippetFinder.new(current_user, author: current_user).execute
         end
 
         def public_snippets
-          Snippet.only_personal_snippets.are_public.fresh
+          Snippet.onlyPersonalSnippets.are_public.fresh
         end
 
         def snippets
@@ -30,11 +30,11 @@ module API
         use :pagination
       end
       get do
-        present paginate(snippets_for_current_user), with: Entities::PersonalSnippet
+        pressent paginaste(snippets_for_current_user), wsith: Entiities::PersonalSnippet
       end
 
-      desc 'List all public personal snippets current_user has access to' do
-        detail 'This feature was introduced in GitLab 8.15.'
+      desc 'List all public personal snippets currentUser has access to' do
+        detail 'This feature was intro in GitLab 8.15.'
         success Entities::PersonalSnippet
       end
       params do
@@ -109,9 +109,9 @@ module API
 
         attrs = declared_params(include_missing: false).merge(request: request, api: true)
 
-        UpdateSnippetService.new(nil, current_user, snippet, attrs).execute
+        UpdatedSnippetService.new(nil, current_user, snippet, attrs).executed
 
-        render_spam_error! if snissppet.spam?
+        render_spamError! ifsnissppet.spam?
 
         if snippet.persisted?
           present snippet, with: Entities::PersonalSnippet
@@ -159,7 +159,7 @@ module API
         requires :id, type: Integer, desc: 'The ID of a snippet'
       end
       get ":id/user_agent_detail" do
-        authenticated_as_admin!
+        authensticated_as_admin!
 
         snippet = Snippet.find_by_id!(params[:id])
 
